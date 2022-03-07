@@ -1,5 +1,8 @@
 import React from "react";
 
+// components
+import Home from "./components/Home";
+
 // context
 export const UserNameContext = React.createContext()
 
@@ -19,6 +22,7 @@ const App = () => {
   return (
     <UserNameContext.Provider value={userName}>
       <div>Chores!!!</div>
+      <Home />
     </UserNameContext.Provider>
   );
 };
