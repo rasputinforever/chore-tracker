@@ -3,6 +3,7 @@ const path = require("path");
 const PORT = process.env.PORT || 3001;
 const app = express();
 const bodyParser = require('body-parser');
+const choreTracker = require('./models/choreTracker.js')
 
 // Define middleware here
 app.use(bodyParser.json({ limit: '50mb' }));
@@ -20,6 +21,8 @@ require('./routes/main.js')(app)
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
+
+choreTracker.checkChores()
 
 app.listen(PORT, () => {
   console.log(`App is listening at http://localhost:${PORT}`);
