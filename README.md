@@ -1,2 +1,3 @@
-# chore-tracker
-tracks chores in my home
+# Chore Tracker
+
+Made this for my house!
