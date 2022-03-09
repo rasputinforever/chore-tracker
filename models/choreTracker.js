@@ -5,7 +5,7 @@ var path = require('path');
 const choreTracker = {
     getChores: () => {
         return new Promise((resolve, reject) => {
-            fs.readFile(__dirname + '/chores.json', 'utf8' , (err, data) => {
+            fs.readFile(__dirname + '/choresDB.json', 'utf8' , (err, data) => {
                 if (err) {
                     console.error("error reading file", err);
                     resolve([])
@@ -21,7 +21,7 @@ const choreTracker = {
     writeChore: (received) => {
         console.log("Got a chore", received)
         return new Promise((resolve, reject) => {
-            fs.readFile(__dirname + '/chores.json', 'utf8' , (err, data) => {
+            fs.readFile(__dirname + '/choresDB.json', 'utf8' , (err, data) => {
                 if (err) {
                     console.error("error reading file", err);
                     resolve(false)                
@@ -32,7 +32,7 @@ const choreTracker = {
                 newData.push(received)
                 console.log("Will PUsh This", newData)
     
-                fs.writeFile(__dirname + '/chores.json', JSON.stringify(newData), err => {
+                fs.writeFile(__dirname + '/choresDB.json', JSON.stringify(newData), err => {
                     if (err) {
                         console.error("Could not write file", err)
                         resolve(false)                
@@ -48,11 +48,11 @@ const choreTracker = {
     )}
     ,
     checkChores: () => {
-        fs.readFile(__dirname + '/chores.json', 'utf8' , (err, data) => {
+        fs.readFile(__dirname + '/choresDB.json', 'utf8' , (err, data) => {
             if (err) {
                 console.error("No File");
                 const initData = []
-                fs.writeFile(__dirname + '/chores.json', JSON.stringify([]), err => {
+                fs.writeFile(__dirname + '/choresDB.json', JSON.stringify([]), err => {
                     if (err) {
                       console.error("Could not write file", err)
                       return
