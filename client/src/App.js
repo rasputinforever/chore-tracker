@@ -21,8 +21,10 @@ const App = () => {
 
   return (
     <UserNameContext.Provider value={userName}>
-      <div>Chores!!!</div>
+      <div style={{backgroundColor: 'grey'}}>
+        Chores!!!
       <Home />
+      </div>
     </UserNameContext.Provider>
   );
 };
