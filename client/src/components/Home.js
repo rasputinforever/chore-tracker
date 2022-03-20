@@ -40,7 +40,7 @@ function Home() {
                 {newChoreMode ? <NewChore setNewChoreMode={setNewChoreMode} /> : <Button variant='contained' onClick={() => setNewChoreMode(true)} endIcon={<CoffeeIcon />}>New Chore</Button>}
                 {chores.map((c, i) => {
                     return (
-                        <Chore key={i} chore={c} />
+                        <Chore key={i} chore={c} setChores={setChores} />
                     )
                 })}
 

@@ -16,7 +16,7 @@ import SaveIcon from '@mui/icons-material/Save';
 // utils
 import API from "../utils/API.js"
 
-export default function Chore({ chore }) {
+export default function Chore({ chore, setChores }) {
     
     console.log(chore)
 
@@ -61,10 +61,13 @@ export default function Chore({ chore }) {
 
         // API submit here
         console.log("Sending this chore", editChore)
-        await API.putEditChore(editChore)
+        const data = await API.putEditChore(editChore)
         // IF SUCCESS: 
-        setComplete(false)
-        
+        console.log("data", data)
+        setChores(data.data)
+        setEdit(false)
+
+
     }
 
     const handleInput = (e, cat) => {
