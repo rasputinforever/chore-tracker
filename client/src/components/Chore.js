@@ -15,6 +15,7 @@ import SaveIcon from '@mui/icons-material/Save';
 
 // utils
 import API from "../utils/API.js"
+import dateTools from '../utils/dateTools.js';
 
 export default function Chore({ chore, setChores }) {
     
@@ -39,12 +40,20 @@ export default function Chore({ chore, setChores }) {
         setComplete(true)
     }
 
-    const handleComplete = () => {
+    const handleComplete = async () => {
         console.log("Submit that you did it")
         
         setLoading(true)
 
+        // set last perforemd to 0
+        const sendChore = Object.assign({}, editChore)
+        sendChore.lastDate = dateTools.dateNow()
+
         // API submit here
+        console.log("Sending this chore", sendChore)
+        const data = await API.putEditChore(sendChore)
+        // IF SUCCESS: 
+        setChores(data.data)
 
         // IF SUCCESS: 
         setComplete(false)
@@ -54,24 +63,16 @@ export default function Chore({ chore, setChores }) {
         setEdit(true)
     }
 
-    const handleSave = async () => {
-        console.log("Submit the edit")
-        
+    const handleSave = async () => {        
         setLoading(true)
-
         // API submit here
-        console.log("Sending this chore", editChore)
         const data = await API.putEditChore(editChore)
         // IF SUCCESS: 
-        console.log("data", data)
         setChores(data.data)
         setEdit(false)
-
-
     }
 
-    const handleInput = (e, cat) => {
-        console.log(e.target.value, cat)
+    const handleInput = (e, cat) => {        
         const newEditChore = Object.assign({}, editChore)
         newEditChore[cat] = e.target.value
         setEditChore(newEditChore)
@@ -92,7 +93,7 @@ export default function Chore({ chore, setChores }) {
                 }                
             </Grid>
             <Grid xs={4}>{chore.name}</Grid>      
-            <Grid xs={4}>{chore.interval}</Grid>     
+            <Grid xs={4}>{chore.lastDate}</Grid>     
             <Grid xs={2}><IconButton onClick={handleCheck}><CheckIcon /></IconButton>  </Grid>            
 
         </Grid>
