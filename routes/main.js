@@ -17,11 +17,23 @@ module.exports = (app) => {
     const paramObj = req.body  
     console.log("PUT request on chores API", "User IP:", req.headers['x-forwarded-for'] || req.connection.remoteAddress, "User:", paramObj.user)      
     
-    const data = choreTracker.writeChore(paramObj.data)
-
-    res.status(201).json(data)
+    choreTracker.writeChore(paramObj.data)
+    .then(data => {
+      res.status(201).json(data)
+    })
+    
     
   });
 
+  app.put('/api/chores-edit', (req, res) => {        
+    const paramObj = req.body  
+    console.log("PUT request on chores API", "User IP:", req.headers['x-forwarded-for'] || req.connection.remoteAddress, "User:", paramObj.user)      
+    
+    choreTracker.editChore(paramObj.data)
+    .then(data => {
+      res.status(201).json(data)
+    })
+    
+  });
 
 }

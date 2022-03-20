@@ -47,6 +47,42 @@ const choreTracker = {
         
     )}
     ,
+    editChore: (received) => {
+        console.log("Got a chore edit", received)
+        return new Promise((resolve, reject) => {
+            fs.readFile(__dirname + '/choresDB.json', 'utf8' , (err, data) => {
+                if (err) {
+                    console.error("error reading file", err);
+                    resolve(false)                
+                }
+                
+                // get array of existing chores
+                const newData = JSON.parse(data)
+                // find chore by name                
+                let choreFound = newData.find(c => c.name === received.name)
+                // put new data onto chore with received object
+                if (choreFound) {
+                    choreFound = received
+                }
+                
+
+
+    
+                fs.writeFile(__dirname + '/choresDB.json', JSON.stringify(newData), err => {
+                    if (err) {
+                        console.error("Could not write file", err)
+                        resolve(false)                
+                    }
+                    console.log("Added Chore")
+                    resolve(newData)
+                })
+                    
+            });
+            
+        }
+        
+    )}
+    ,
     checkChores: () => {
         fs.readFile(__dirname + '/choresDB.json', 'utf8' , (err, data) => {
             if (err) {
