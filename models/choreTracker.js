@@ -58,8 +58,8 @@ const choreTracker = {
                 
                 // get array of existing chores
                 const newData = JSON.parse(data)
-                // find chore by name                
-                let choreFound = newData.find(c => c.name === received.name)
+                // find chore by key                
+                let choreFound = newData.find(c => c.key === received.key)
                 // put new data onto chore with received object
                 if (choreFound) {
                     choreFound = received

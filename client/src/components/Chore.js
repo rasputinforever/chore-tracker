@@ -18,6 +18,8 @@ import API from "../utils/API.js"
 
 export default function Chore({ chore }) {
     
+    console.log(chore)
+
     const [open, setOpen] = React.useState(false)
     const [complete, setComplete] = React.useState(false)
     const [loading, setLoading] = React.useState(false)
@@ -27,6 +29,9 @@ export default function Chore({ chore }) {
     const handleOpen = (e) => {
         console.log(e)
         setOpen(!open)
+        if (!open === false) {
+            setEdit(false)
+        }
     }
 
     const handleCheck = () => {
