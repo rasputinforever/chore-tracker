@@ -28,8 +28,8 @@ module.exports = (app) => {
   app.put('/api/chores-edit', (req, res) => {        
     const paramObj = req.body  
     console.log("PUT request on chores API", "User IP:", req.headers['x-forwarded-for'] || req.connection.remoteAddress, "User:", paramObj.user)      
-    
-    choreTracker.editChore(paramObj.data)
+    console.log(req.body)
+    choreTracker.editChore(req.body)
     .then(data => {
       res.status(201).json(data)
     })

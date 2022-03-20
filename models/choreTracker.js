@@ -60,20 +60,20 @@ const choreTracker = {
                 const newData = JSON.parse(data)
                 // find chore by key                
                 let choreFound = newData.find(c => c.key === received.key)
+                console.log("fouund this:", choreFound)
+                const index = newData.indexOf(choreFound)
+                console.log("This index", index)
                 // put new data onto chore with received object
-                if (choreFound) {
-                    choreFound = received
+                if (choreFound) {                    
+                    newData.splice(index, 1, received)
                 }
-                
-
-
     
                 fs.writeFile(__dirname + '/choresDB.json', JSON.stringify(newData), err => {
                     if (err) {
                         console.error("Could not write file", err)
                         resolve(false)                
                     }
-                    console.log("Added Chore")
+                    console.log("Saved Chore")
                     resolve(newData)
                 })
                     

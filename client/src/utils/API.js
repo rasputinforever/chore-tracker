@@ -11,6 +11,13 @@ const API = {
       data: query
     })
   },
+  putEditChore: function(query) {
+    return axios({
+      method: 'put',
+      url: "/api/chores-edit",
+      data: query
+    })
+  },
 };
 
 export default API

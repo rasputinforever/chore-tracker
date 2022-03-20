@@ -54,15 +54,17 @@ export default function Chore({ chore }) {
         setEdit(true)
     }
 
-    const handleSave = () => {
+    const handleSave = async () => {
         console.log("Submit the edit")
         
         setLoading(true)
 
         // API submit here
-
+        console.log("Sending this chore", editChore)
+        await API.putEditChore(editChore)
         // IF SUCCESS: 
         setComplete(false)
+        
     }
 
     const handleInput = (e, cat) => {
