@@ -2,6 +2,7 @@ import React ,{ useEffect } from 'react';
 
 // components
 import NewChore from './NewChore.js'
+import Chore from './Chore.js'
 
 // material ui
 import Typography from '@mui/material/Typography'
@@ -39,7 +40,7 @@ function Home() {
                 {newChoreMode ? <NewChore setNewChoreMode={setNewChoreMode} /> : <Button variant='contained' onClick={() => setNewChoreMode(true)} endIcon={<CoffeeIcon />}>New Chore</Button>}
                 {chores.map((c, i) => {
                     return (
-                        <p key={i}>Name:{c.name}</p>
+                        <Chore key={i} chore={c} />
                     )
                 })}
 
