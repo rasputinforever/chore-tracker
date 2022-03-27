@@ -12,12 +12,18 @@ import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import CheckIcon from '@mui/icons-material/Check';
 import SaveIcon from '@mui/icons-material/Save';
+import CloseIcon from '@mui/icons-material/Close';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+
 
 // utils
 import API from "../utils/API.js"
 import dateTools from '../utils/dateTools.js';
 
-export default function Chore({ chore, setChores }) {
+export default function Chore({ chore, setChores, userName }) {
     
     console.log(chore)
 
@@ -27,28 +33,27 @@ export default function Chore({ chore, setChores }) {
     const [edit, setEdit] = React.useState(false)
     const [editChore, setEditChore] = React.useState(Object.assign({}, chore))
     
-    const handleOpen = (e) => {
-        console.log(e)
-        setOpen(!open)
-        if (!open === false) {
-            setEdit(false)
-        }
+    const handleDefault = () => {
+        
+        setEdit(false)
+        setComplete(false)
     }
 
     const handleCheck = () => {
         console.log("Set that you did it")
+        setEdit(false)    
         setComplete(true)
     }
-
+    
     const handleComplete = async () => {
         console.log("Submit that you did it")
-        
+            
         setLoading(true)
 
         // set last perforemd to 0
         const sendChore = Object.assign({}, editChore)
         sendChore.lastDate = dateTools.dateNow()
-
+        sendChore.person = userName
         // API submit here
         console.log("Sending this chore", sendChore)
         const data = await API.putEditChore(sendChore)
@@ -61,6 +66,7 @@ export default function Chore({ chore, setChores }) {
 
     const handleEdit = () => {
         setEdit(true)
+        setComplete(false)
     }
 
     const handleSave = async () => {        
@@ -80,50 +86,71 @@ export default function Chore({ chore, setChores }) {
     
   return (
       <>
-        <Grid
-        container 
-            style={{backgroundColor: '#0099FF', width: '100%'}}            
-        >            
-            <Grid xs={2}>
-                {
-                    open ? 
-                    <IconButton onClick={handleOpen}><AddIcon /></IconButton>                        
-                        :
-                    <IconButton onClick={handleOpen}><RemoveIcon /></IconButton>
-                }                
-            </Grid>
-            <Grid xs={4}>{chore.name}</Grid>      
-            <Grid xs={4}>{chore.lastDate}</Grid>     
-            <Grid xs={2}><IconButton onClick={handleCheck}><CheckIcon /></IconButton>  </Grid>            
+          <Card sx={{ 
+            boxShadow: 1,
+            m: 1,
+            minWidth: 300
+           }}>
 
-        </Grid>
+            {/* Active */}
+            <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                    {chore.name}
+                </Typography>
+                <Typography gutterBottom variant="h8" component="div">
+                    Last Performed by {chore.person} on {chore.lastDate}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                    {chore.description}
+                </Typography>
+            </CardContent>
+            <CardActions>
+                <Button size="small" onClick={handleEdit} endIcon={<EditIcon />} >Edit</Button>
+                <Button size="small" onClick={handleCheck} endIcon={<CheckIcon />} >Mark as Done</Button>
+            </CardActions>
 
+           {edit ? 
+           <>
+                {/* Edit Mode */}
+            <Typography gutterBottom variant="h8" component="div">
+                Chore or Task Name: 
+            </Typography>
+            <TextField value={editChore.name} onChange={(e) => {handleInput(e, 'name')}}></TextField>
+
+            <Typography gutterBottom variant="h8" component="div">
+                Description: 
+            </Typography>
+            <TextField value={editChore.description} onChange={(e) => {handleInput(e, 'description')}}></TextField>
+
+            <Typography variant="body2" color="text.secondary">
+                How often should this be done in days (enter "NA" if it's a one-time task): 
+            </Typography>
+            <TextField value={editChore.interval} onChange={(e) => {handleInput(e, 'interval')}}></TextField>
+
+            <Typography variant="body2" color="text.secondary">
+                Date that this chore was last performed: 
+            </Typography>
+            <TextField value={editChore.lastDate} onChange={(e) => {handleInput(e, 'lastDate')}}></TextField>
+            
+            <CardActions>            
+                <Button size="small" onClick={handleSave} endIcon={<SaveIcon />} >Save Changes</Button>
+                <Button size="small" onClick={handleDefault} endIcon={<SaveIcon />} >Cancel</Button>
+            </CardActions>
+
+           </>
+           : null}
+
+            </Card>
+
+        
         {/* details and editing */}
-        {open ? 
-        <Grid container>            
-            {edit ? 
-            <>
-                <Grid xs={2}><IconButton onClick={handleSave} disabled={JSON.stringify(editChore) === JSON.stringify(chore)}><SaveIcon /></IconButton></Grid>      
-                <Grid xs={8}>
-                    Name: <TextField value={editChore.name} onChange={(e) => {handleInput(e, 'name')}}></TextField>
-                    Description: <TextField value={editChore.description} onChange={(e) => {handleInput(e, 'description')}}></TextField>
-                    Interval (days): <TextField value={editChore.interval} onChange={(e) => {handleInput(e, 'interval')}}></TextField>
-                    Last Performed (days): <TextField value={editChore.lastDate} onChange={(e) => {handleInput(e, 'lastDate')}}></TextField>
-                </Grid>  
-
-            </> :
-            <>            
-                <Grid xs={2}><IconButton onClick={handleEdit} ><EditIcon /></IconButton></Grid>      
-                <Grid xs={4}>{chore.description}</Grid>  
-            </>}
-        </Grid>
-        : null}
 
         {/* Submit complete work */}
         {complete ? 
-        <Grid container>                            
-            <Grid xs={4}>Date complete:</Grid>  
-            <Grid xs={2}><IconButton onClick={handleComplete}><SaveIcon /></IconButton>  </Grid>  
+        <Grid container style={{backgroundColor: '#F6ABA5'}}>                         
+            <Grid xs={6}>Mark as Complete?</Grid>  
+            <Grid xs={3}><IconButton style={{padding: '0px'}} onClick={handleComplete}><SaveIcon /></IconButton>  </Grid>  
+            <Grid xs={2}><IconButton style={{padding: '0px'}} onClick={() => {setComplete(false)}}><CloseIcon /></IconButton>  </Grid>  
         </Grid>
         : null}
 
