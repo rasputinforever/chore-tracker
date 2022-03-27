@@ -31,6 +31,9 @@ const choreTracker = {
                 console.log("This is the file", newData)
                 newData.push(received)
                 console.log("Will PUsh This", newData)
+                newData.forEach((item, i) => {
+                    item.key = i + 1
+                })
     
                 fs.writeFile(__dirname + '/choresDB.json', JSON.stringify(newData), err => {
                     if (err) {
@@ -122,14 +125,6 @@ const choreTracker = {
             )
             
         });
-
-        // go through each 
-        // sort by how close to being "due" it is
-        // compare today's date to "last performed" + interval days
-        // smaller the number, closer to start
-
-        // all others go to end of list
-
 
         return sortedArr
     }
