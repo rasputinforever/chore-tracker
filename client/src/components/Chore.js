@@ -14,14 +14,43 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import API from "../utils/API.js"
 import dateTools from '../utils/dateTools.js';
 
+const colors = {
+    far: '#B7E5D5',
+    near: '#E0E7B5',
+    late: '#EDC4BC',
+    neutral: '#CFC5F6'
+}
+
 export default function Chore({ chore, setChores, userName }) {
 
     const [complete, setComplete] = React.useState(false)
     const [edit, setEdit] = React.useState(false)
     const [editChore, setEditChore] = React.useState(Object.assign({}, chore))
     
-    const handleDefault = () => {
+    const findUrgency = () => {
+        const nextDue = dateTools.dateDue(chore.lastDate, chore.interval)
+        const daysLeft = dateTools.daysLeft(new Date(), nextDue)
+
+        console.log(daysLeft)
+
+        let color = colors.neutral
+        if (daysLeft) {
+            if (daysLeft > 15) {
+                color = colors.far
+            } else if (daysLeft > 0) {
+                color = colors.near
+            } else {
+                color = colors.late
+            }
+        } 
+
+        return color
         
+        
+        
+    }
+
+    const handleDefault = () => {        
         setEdit(false)
         setComplete(false)
     }
@@ -74,7 +103,8 @@ export default function Chore({ chore, setChores, userName }) {
           <Card sx={{ 
             boxShadow: 1,
             m: 1,
-            minWidth: 300
+            minWidth: 300,
+            bgcolor: findUrgency()
            }}>
 
             {/* Active */}

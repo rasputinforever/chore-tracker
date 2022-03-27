@@ -42,7 +42,8 @@ export default function NewChore({ setNewChoreMode, setChores }) {
       <Card sx={{ 
             boxShadow: 1,
             m: 1,
-            minWidth: 300
+            minWidth: 300,
+            bgcolor: '#CFC5F6'
            }}>
 
             {/* Active */}
