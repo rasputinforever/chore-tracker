@@ -5,6 +5,11 @@ import SendIcon from '@mui/icons-material/Send';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 // utils
 import API from "../utils/API.js"
@@ -37,39 +42,48 @@ export default function NewChore({ setNewChoreMode, setChores }) {
 
   return (
       <>
-      
-        <Box
-            style={{backgroundColor: '#0099FF'}}
-            component="form"
-            sx={{
-                '& > :not(style)': { m: 1, width: '25ch' },
-            }}
-            noValidate
-            autoComplete="off"
-        >
-            <div style={{width: '90%', backgroundColor: 'white', textAlign: 'center', margin: 'auto'}}>
+      <Card sx={{ 
+            boxShadow: 1,
+            m: 1,
+            minWidth: 300
+           }}>
 
-                <div>
-                    <TextField color='primary' style={{margin: '5px', width: '70%'}} label="Name of Chore" variant="outlined" value={input.name} onChange={(e) => handleInput(e, 'name')}/>
-                    <TextField style={{margin: '5px', width: '20%'}}  label="Interval (days)" variant="outlined" value={input.interval} onChange={(e) => handleInput(e, 'interval')} />
-                </div>
-
-                <br />
-
-                <TextField style={{margin: '5px', width: '90%'}} id="outlined-basic" label="Description" variant="outlined" value={input.description} onChange={(e) => handleInput(e, 'description')} />
+            {/* Active */}
+            <CardContent>
+                
+            <Typography gutterBottom variant="h5" component="div">
+                New Chore
+            </Typography>
 
 
-                <Stack direction="row" spacing={2}>
-                    <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => setNewChoreMode(false)}>
-                        Exit
-                    </Button>
-                    <Button variant="contained" endIcon={<SendIcon />} onClick={submitChore}>
-                        Send
-                    </Button>
-                </Stack>
+            <Typography gutterBottom variant="h8" component="div">
+                Chore or Task Name: 
+            </Typography>
+            
+            <TextField color='primary' variant="outlined" value={input.name} onChange={(e) => handleInput(e, 'name')}/>
 
-            </div>
-        </Box>
+            <Typography gutterBottom variant="h8" component="div">
+                Description: 
+            </Typography>
+                    <TextField color='primary' variant="outlined" value={input.description} onChange={(e) => handleInput(e, 'description')}/>
+                    
+
+            <Typography variant="body2" color="text.secondary">
+                How often should this be done in days (enter "NA" if it's a one-time task): 
+            </Typography>
+            <TextField variant="outlined" value={input.interval} onChange={(e) => handleInput(e, 'interval')} />
+            </CardContent>
+
+            <CardActions>
+                <Button variant="contained" endIcon={<SendIcon />} onClick={submitChore}>
+                    Save
+                </Button>
+                <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => setNewChoreMode(false)}>
+                        Cancel
+                </Button>
+            </CardActions>
+        </Card>
+
 
       </>
   );
