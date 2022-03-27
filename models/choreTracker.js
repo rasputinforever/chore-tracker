@@ -100,6 +100,38 @@ const choreTracker = {
                 console.log("File exists!")
                 return
           });
+    },
+    sortChores: (arr) => {
+        console.log("sort this", arr)
+        const sortedArr = arr.sort((a,b) => {
+
+            let Adate1 = new Date(a.lastDate);
+            Adate1.setDate(Adate1.getDate() + parseInt(a.interval));
+            let Adate2 = new Date();
+            let timeInMilisecA = Adate1.getTime() - Adate2.getTime();
+            let daysBetweenDatesA = Math.ceil(timeInMilisecA / (1000 * 60 * 60 * 24));
+
+            let Bdate1 = new Date(b.lastDate);
+            Bdate1.setDate(Bdate1.getDate() + parseInt(b.interval));
+            let Bdate2 = new Date();
+            let timeInMilisecB = Bdate1.getTime() - Bdate2.getTime();
+            let daysBetweenDatesB = Math.ceil(timeInMilisecB / (1000 * 60 * 60 * 24));
+            console.log(daysBetweenDatesA - daysBetweenDatesB, daysBetweenDatesA, daysBetweenDatesB)
+            return (
+                (isNaN(daysBetweenDatesA) ? 0 : daysBetweenDatesA) - (isNaN(daysBetweenDatesB) ? 0 : daysBetweenDatesB)
+            )
+            
+        });
+
+        // go through each 
+        // sort by how close to being "due" it is
+        // compare today's date to "last performed" + interval days
+        // smaller the number, closer to start
+
+        // all others go to end of list
+
+
+        return sortedArr
     }
 }
 
