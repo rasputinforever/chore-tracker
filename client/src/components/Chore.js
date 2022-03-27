@@ -17,7 +17,7 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-
+import CancelIcon from '@mui/icons-material/Cancel';
 
 // utils
 import API from "../utils/API.js"
@@ -98,20 +98,24 @@ export default function Chore({ chore, setChores, userName }) {
                     {chore.name}
                 </Typography>
 
+                {/* Done or Not Done */}
                 {!chore.lastDate ?
                 <>
-                <Typography gutterBottom variant="h8" component="div">
-                    Not Yet Done
-                </Typography>
+                    {/* Not Done */}
+                    <Typography gutterBottom variant="h8" component="div">
+                        Not Yet Done
+                    </Typography>
                 </>
                 :
                 <>
-                <Typography gutterBottom variant="h8" component="div">
-                    Last Performed by {chore.person} on {chore.lastDate}
-                </Typography>
-                <Typography gutterBottom variant="h8" component="div">
-                    Next Day Due: {dateTools.dateDue(chore.lastDate, chore.interval)}
-                </Typography>
+                    {/* Done */}
+{/* Has an "interval" or not */}
+                    <Typography gutterBottom variant="h8" component="div">
+                        Last Performed by {chore.person} on {chore.lastDate}
+                    </Typography>
+                    <Typography gutterBottom variant="h8" component="div">
+                        Next Day Due: {dateTools.dateDue(chore.lastDate, chore.interval)}
+                    </Typography>
                 </>
                 }
                 
@@ -121,13 +125,13 @@ export default function Chore({ chore, setChores, userName }) {
                 </Typography>
             </CardContent>
 
-            <CardActions>
-                <Button size="small" onClick={handleEdit} endIcon={<EditIcon />} >Edit</Button>
-                <Button size="small" onClick={handleCheck} endIcon={<CheckIcon />} >Mark as Done</Button>
-            </CardActions>
-
-
-
+                {/* Hide these when other modes are active */}
+                {!edit && !complete ? 
+                <CardActions>
+                    <Button size="small" onClick={handleEdit} endIcon={<EditIcon />} >Edit</Button>
+                    <Button size="small" onClick={handleCheck} endIcon={<CheckIcon />} >Mark as Done</Button>
+                </CardActions>
+                : null}
 
            {edit ? 
            <>
@@ -154,25 +158,39 @@ export default function Chore({ chore, setChores, userName }) {
             
             <CardActions>            
                 <Button size="small" onClick={handleSave} endIcon={<SaveIcon />} >Save Changes</Button>
-                <Button size="small" onClick={handleDefault} endIcon={<SaveIcon />} >Cancel</Button>
+                <Button size="small" onClick={handleDefault} endIcon={<CancelIcon />} >Cancel</Button>
             </CardActions>
 
            </>
            : null}
+
+
+        {/* Submit complete work */}
+        {complete ?         
+            <>
+            <Typography gutterBottom variant="h8" component="div">
+                Mark as Complete?
+            </Typography>
+
+            <Typography variant="body2" color="text.secondary">
+                Date Performed
+            </Typography>
+            
+            <TextField value={editChore.lastDate} onChange={(e) => {handleInput(e, 'lastDate')}}></TextField>
+            
+            <CardActions>    
+                <Button size="small" onClick={handleComplete} endIcon={<SaveIcon />} >Confirm Complete</Button>
+                <Button size="small" onClick={handleDefault} endIcon={<CancelIcon />} >Cancel</Button>        
+            </CardActions>
+            </>
+        : null}
 
             </Card>
 
         
         {/* details and editing */}
 
-        {/* Submit complete work */}
-        {complete ? 
-        <Grid container style={{backgroundColor: '#F6ABA5'}}>                         
-            <Grid xs={6}>Mark as Complete?</Grid>  
-            <Grid xs={3}><IconButton style={{padding: '0px'}} onClick={handleComplete}><SaveIcon /></IconButton>  </Grid>  
-            <Grid xs={2}><IconButton style={{padding: '0px'}} onClick={() => {setComplete(false)}}><CloseIcon /></IconButton>  </Grid>  
-        </Grid>
-        : null}
+
 
       </>
   );
