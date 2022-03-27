@@ -56,18 +56,12 @@ function Home() {
     }
 
     return (
-        <div style={{backgroundColor: '#A5C8E4', height: '100vh', width: '100vw'}}>
+        <div style={{backgroundColor: '#A5C8E4'}}>
         
       
         
         <Typography>Chore App</Typography>    
-                
-        {newChoreMode ? 
-            <NewChore setNewChoreMode={setNewChoreMode} /> 
-                : 
-            <Button onClick={() => setNewChoreMode(true)} setChores={setChores} endIcon={<CoffeeIcon />}>New Chore</Button>
-        }
-
+        
         {editUserName ? 
             <div style={{float: 'right'}}>
                 <Typography variant='span'>UserName:</Typography> <TextField value={userName} onChange={handleEntry}/><IconButton onClick={handleSaveUserName} ><SaveIcon /></IconButton>
@@ -78,11 +72,22 @@ function Home() {
             </div>
         }
 
+        {newChoreMode ? 
+            <NewChore setNewChoreMode={setNewChoreMode} /> 
+                : 
+            <Button onClick={() => setNewChoreMode(true)} setChores={setChores} endIcon={<CoffeeIcon />}>New Chore</Button>
+        }
+
+
+        {!newChoreMode ? 
+        <>
         {chores.map((c, i) => {
             return (
                 <Chore key={i} chore={c} setChores={setChores} userName={userName}/>
             )
         })}
+        </>
+        : null }
 
                 
         </div>

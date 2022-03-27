@@ -2,14 +2,11 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SendIcon from '@mui/icons-material/Send';
-import Stack from '@mui/material/Stack';
-import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import CancelIcon from '@mui/icons-material/Cancel';
 
 // utils
 import API from "../utils/API.js"
