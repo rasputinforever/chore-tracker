@@ -97,17 +97,37 @@ export default function Chore({ chore, setChores, userName }) {
                 <Typography gutterBottom variant="h5" component="div">
                     {chore.name}
                 </Typography>
+
+                {!chore.lastDate ?
+                <>
+                <Typography gutterBottom variant="h8" component="div">
+                    Not Yet Done
+                </Typography>
+                </>
+                :
+                <>
                 <Typography gutterBottom variant="h8" component="div">
                     Last Performed by {chore.person} on {chore.lastDate}
                 </Typography>
+                <Typography gutterBottom variant="h8" component="div">
+                    Next Day Due: {dateTools.dateDue(chore.lastDate, chore.interval)}
+                </Typography>
+                </>
+                }
+                
+                
                 <Typography variant="body2" color="text.secondary">
                     {chore.description}
                 </Typography>
             </CardContent>
+
             <CardActions>
                 <Button size="small" onClick={handleEdit} endIcon={<EditIcon />} >Edit</Button>
                 <Button size="small" onClick={handleCheck} endIcon={<CheckIcon />} >Mark as Done</Button>
             </CardActions>
+
+
+
 
            {edit ? 
            <>

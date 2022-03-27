@@ -65,7 +65,7 @@ function Home() {
         {newChoreMode ? 
             <NewChore setNewChoreMode={setNewChoreMode} /> 
                 : 
-            <Button onClick={() => setNewChoreMode(true)} endIcon={<CoffeeIcon />}>New Chore</Button>
+            <Button onClick={() => setNewChoreMode(true)} setChores={setChores} endIcon={<CoffeeIcon />}>New Chore</Button>
         }
 
         {editUserName ? 

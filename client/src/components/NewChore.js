@@ -25,6 +25,7 @@ export default function NewChore({ setNewChoreMode, setChores }) {
     
     const submitChore = async () => {
         const data = await API.putChore({user: 'Test', data: input})
+        // setChores(data.data)
         setNewChoreMode(false)
         setInput({
             name: '',
@@ -36,6 +37,7 @@ export default function NewChore({ setNewChoreMode, setChores }) {
 
   return (
       <>
+      
         <Box
             style={{backgroundColor: '#0099FF'}}
             component="form"
