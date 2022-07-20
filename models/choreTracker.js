@@ -5,6 +5,7 @@ var path = require('path');
 const choreTracker = {
     getChores: () => {
         return new Promise((resolve, reject) => {
+            console.log(__dirname + '/choresDB.json')
             fs.readFile(__dirname + '/choresDB.json', 'utf8' , (err, data) => {
                 if (err) {
                     console.error("error reading file", err);
@@ -100,7 +101,8 @@ const choreTracker = {
                   })
                 
             }
-                console.log("File exists!")
+                console.log("File exists!", __dirname + '/choresDB.json')
+                
                 return
           });
     },
